@@ -27,3 +27,19 @@ jobs:
         with:
           name: BaonTracker-apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload APK to Appetize
+        env:
+          APPETIZE_API_KEY: ${{ secrets.APPETIZE_API_KEY }}
+        run: |
+          if [ -z "$APPETIZE_API_KEY" ]; then
+            echo "No APPETIZE_API_KEY secret set, skipping Appetize upload."
+            exit 0
+          fi
+          curl -sS -X POST https://api.appetize.io/v1/apps \
+            -H "X-API-KEY: $APPETIZE_API_KEY" \
+            -F "file=@app/build/outputs/apk/debug/app-debug.apk" \
+            -F "platform=android" \
+            -F "note=Baon Tracker" | tee appetize.json
+          echo
+          grep -o '"publicKey":"[^"]*"' appetize.json && echo "Open it in your Appetize Apps page."
