@@ -36,10 +36,9 @@ jobs:
             echo "No APPETIZE_API_KEY secret set, skipping Appetize upload."
             exit 0
           fi
-          curl -sS -X POST https://api.appetize.io/v1/apps \
+          # Updates the same Appetize app each time instead of making a new one.
+          curl -sS -o /dev/null -w "Appetize upload: HTTP %{http_code}\n" -X POST \
+            https://api.appetize.io/v1/apps/whfzojbwx4qryt4hk4cg6vefkm \
             -H "X-API-KEY: $APPETIZE_API_KEY" \
             -F "file=@app/build/outputs/apk/debug/app-debug.apk" \
-            -F "platform=android" \
-            -F "note=Baon Tracker" | tee appetize.json
-          echo
-          grep -o '"publicKey":"[^"]*"' appetize.json && echo "Open it in your Appetize Apps page."
+            -F "platform=android"
