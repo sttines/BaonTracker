@@ -76,13 +76,13 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
-    <style name="BaonTracker.SectionLabel">
+    <style name="BaonTracker.SectionLabel" parent="">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_secondary</item>
     </style>
 
-    <style name="BaonTracker.Row">
+    <style name="BaonTracker.Row" parent="">
         <item name="android:padding">16dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_primary</item>
